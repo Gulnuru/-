@@ -107,3 +107,33 @@ let timer = setInterval(function () {
   showSlides(slideIndex);
 }, 1000);
 
+
+
+const forms = document.querySelectorAll("form");
+
+const postData = (form) => {
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    const request = new XMLHttpRequest();
+    request.open("POST", "server.php");
+    request.setRequestHeader("Content-Type", "application/json");
+
+    const formData = new FormData(form);
+    const obj = {};
+
+    formData.forEach((item, name) => {
+      obj[name] = item;
+    });
+    console.log(obj);
+
+    const json = JSON.stringify(obj);
+    console.log(json);
+
+    request.send(json);
+  });
+};
+
+forms.forEach((item) => {
+  postData(item);
+});
